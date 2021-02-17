@@ -1,0 +1,45 @@
+--------------JavaScript Interpreted or Compiled?--------------------------
+
+In general, JavaScript is categorized as a dynamic or interpreted language. There are lots of misunderstandings about this fact. We need to ask and find the answers of,
+
+
+* Is it entirely fair to say, JavaScript is an Interpreted Language?
+* What is the difference between an Interpreter and a Compiler?
+
+
+An interpreter is a computer program that directly executes instructions written in a programming or scripting language without requiring them previously to have been compiled into a machine language program. It translates one Statement at a time.
+
+
+Whereas,
+
+A compiler is computer software that transforms computer code written in one programming language (the source language, like JavaScript, etc.) into another programming language (the target language, like machine code).
+
+
+The first thing to understand, Computer doesn't understand the programming languages directly. Every programming language got its own syntax, grammar, and structure. No matter what programming languages(JavaScript, Python, Java, etc.) are writing the code with, it has to be translated into something that the machine(Computer) understands.
+
+
+The most important fact here is, how does the JavaScript source code go through the journey of becoming a machine-understandable language? JavaScript Engine performs many of the steps(in fact, more cleaner and sophisticated ways) that a typical Compiler would perform in compiling source code
+
+
+In JavaScript, the source code typically goes through the following phases before it is executed,
+
+**Tokenizing**: Breaking up a source code string into meaningful chunks called, Tokens. For example, the source code var age = 7; can be tokenize as, var, age, =, 7 and, ;.
+
+**Parsing**: Parsing is a methodology to take the array of Tokens as input and turn it into a tree of nested elements understood by the grammar of the programming language. This tree is called Abstract Syntax Tree(AST).
+
+**Code Generation**: In this phase, the AST is used as input, and an executable byte-code is generated that is understood by the environment(or platform) where the executable code will be running. The executable byte-code is then refined/converted even further by the optimizing JIT (Just-In-Time) compiler.
+
+-----------------------img---------------------
+
+https://astexplorer.net/
+
+***************************Conclusion******************************
+
+To conclude, JavaScript code indeed gets compiled. It is more closer to be Compiled than Interpreted. It is compiled every time. Next time, if someone asks the question, Does JavaScript really Compiles? The answer is a loud YES. After the compilation process produces a binary byte code, the JS virtual machine executes it.
+
+
+The three phases described above are not the only things that happen to Compile JavaScript Source code. JavaScript engine needs to perform lots of optimization steps to tackle performance issues.
+
+As a developer, we are abstracted away from all of these.
+
+It's time. Let's call it out, JS is a Compiled Language.
