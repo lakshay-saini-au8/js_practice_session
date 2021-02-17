@@ -1,0 +1,148 @@
+// Execution Context is the most fundamental part of JavaScript programming language
+
+
+// JavaScript's Execution Context is the base of understanding many other fundamental concepts correctly. Often we find lots of misunderstanding in each of the following concepts just because we misunderstood the fact behind Execution Context.
+
+// Hoisting
+// Scope
+// Scope Chain
+// Closure
+// Event Loop
+// As a JavaScript Developer, once we develop a good understanding of these concepts, we enable ourselves to,
+
+
+****Parser****: Parser or Syntax Parser is a program to read your code line-by-line and understand how it fits the grammar defined by the Programming Language and what it is expecting to do. As you have seen previously, the JavaScript Syntax Parser takes the array of tokens and create an Abstract Syntax Tree(AST) so that it can be processed further to create executable code.
+
+
+****Lexical Environment****: The word Lexical means related to something. Lexical Environment means how and where your code is physically written. Let's take this piece of code as an example,
+
+function sayName() {
+  var name = 'someName';
+  console.log('The name is, ', name);
+}
+
+In the code above, the variable name is lexically inside the function sayName. Now, this is important to note, and your program doesn't run as-is on the Computer. It has to be translated by the Compiler. Hence the compiler has to know and map what is lexically sitting where correctly. It needs to be meaningful and valid as well.
+
+
+
+Please note; usually, there will be many Lexical Environments in your code. But all the environments will not be executed at once. We will see that shortly.
+
+****Context****: The best way to visualize the word Context is, think of a circle(or Wrapper) surrounding the topic of your interest(or the 'Context of' what we are discussing). Context is a set of circumstances or facts that surround a particular event, situation, etc.
+
+****Execution Context*****: It means the code currently running and everything surrounding it helps run it. There can be lots of Lexical Environment available but, the one Currently running is managed by the Execution Context.
+
+
+As Software Developers, we like(or wish) to write code so that it looks less complicated, can be maintained easily, and follows some practices, standards, etc. With the same analogy, the Execution Context allows the JavaScript engine to maintain the code better and manage the complexities.
+
+Whenever a code is run in JavaScript, it runs within the Execution Context, which is a combination of your code plus, all that we have seen here (Tokenizing, Parsing, Code Generation, etc.) done by the JavaScript Engine.
+
+
+
+**********Global Execution Context(GEC)**************
+
+Whenever a JavaScript Code first runs, it creates something called Global Execution Context(GEC). Even when you do not have a single line of code in a .js file and load it, you will have the Global Execution Context created.
+
+What does the word Global mean here? Anything and Everything Outside a Function is Global.
+
+Global Execution Context is also called the base execution context. It creates two special things for you,
+
+A global object called window for the browser. If you use JavaScript at the server side, say, NodeJs, it won't be the window object.
+
+A global variable called this.
+
+
+Let us understand Global Execution Context with couple of examples,
+
+Loading an Empty Script
+For the sake of simplicity, lets take an empty JavaScript file called, index.js and import it in a html file called, index.html like this,
+
+<html>
+    <head>
+      <script src="index.js" />
+    </head>
+
+    <body>
+      I have loaded an empty Script
+    </body>
+</html>
+
+
+Once you load this HTML on the browser, there will not be any JavaScript code loaded and executed. If you open the debugger console(F12 for Chrome) and type this, you will see something called this created for you already
+
+this
+window
+
+
+Have you noticed, the window object and the this variable both are equal in the Global Execution Context? Try this to confirm,
+
+this === window
+
+***********img2*************
+
+With Variables and Functions
+Let us add some code to the JavaScript file now. We have added a variable called name and initialized it with the value Tom. We have added a function called sayName(), that logs the name.
+
+
+var name = 'Tom';
+
+function sayName() {
+  console.log(this.name); 
+}
+https://ui.dev/javascript-visualizer/
+What do you think will happen to the Global Execution Context now? Let us see it in the following pictorial demonstration first, and then the explanation follows.
+
+
+********img3****************
+
+
+Global Execution Context Phases
+
+There are two phases created in Global Execution Context, i.e., Creation and Execution phases.
+Creation Phase:
+In this phase, two special things get created, i.e., a global object window for browser and a variable called, this.
+Memory gets allocated for the variable name and the function sayName().
+The variable name gets initialized by a special value called undefined. The function sayName() gets placed directly into the memory. hoisting.
+
+
+Execution Phase:
+In this phase, the actual code execution starts. For the example above, the only thing to happen is to assign the value Tom to the variable name. Please note, we do not invoke the function sayName() though we have defined it. Hence this function will not get executed.
+
+
+
+Function Execution Context(FEC)
+A Function Execution Context gets created when a function is invoked.
+
+Let us see the following example to understand this concept. In this example, we have a global variable called name, which is assigned a value Tom. We have a function called tom(), which logs the name. At last, we invoke the function tom().
+
+
+var name = 'Tom';
+
+function tom() {
+   console.log(this.name + ' Runs');
+}
+
+// Invoke the function tom()
+tom();
+
+
+As we have seen above, Global Execution Context's Creation phase creates the window object, this variable, and the memory for the variable and the function. The variable gets initialized with a special value called undefined. The Execution phase assigns the value to the variable and invokes the function. Next, the Function Execution Context gets created.
+
+The Function Execution Context goes through the same phases, Creation and Execution. An important point to note, the Function Execution Context has access to a special variable called arguments, which is the arguments passed to the function while invoking it. In our example, we do not pass any arguments. Hence the length is 0.
+
+A function can invoke another function, and it can invoke another, and so on. For each of the function invocations, there will be a Function Execution Context created. We will see this concept in detail with the upcoming post on Scope.
+
+
+So, what are the differences between Global and Function Execution Context?
+
+Global Execution Context-------------
+1.Creates a Global object.
+2.Create an object called, this
+3.Setup memory space for variables and functions defined globally
+4.Assign variable declaration a default value of undefined while placing any function declaration in memory
+
+
+Function Execution Context------------
+1.Doesn't create the global object. It creates an argument object.
+2.By default, this points to the Window object.
+3.Setup memory space for variables and functions defined within the function.
+4.Assign variable declaration a default value of undefined while placing any function declaration in memory. Additionally, the function execution context creates its own Execution Stack.
