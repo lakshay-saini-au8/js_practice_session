@@ -1,0 +1,100 @@
+What do we know so far
+
+In JavaScript, the source code typically goes through several phases before it is finally executed. The phases are, Tokenizing, Parsing, and Code Generation.
+
+Whenever a JavaScript code runs, it creates something called Execution Context. It helps in determining what code is currently running and helps in allocating memory for every function and variable declarations it finds on the way.
+---------------------------------------------------------------------------------------
+
+*****The mechanism of allocating memory for the functions and variable declarations within an Execution Context is called Hoisting.*****
+
+
+The word Hoisting is confusing and misleading in the context of what is actually happening here. That is one reason why many of the explanations of Hoisting are focused on the fact that variables and functions are hoisted.
+
+In plain English, Hoisting meaning, raise (something) using ropes and pulleys. At some point, one may start believing that things(variables and functions) actually being hoisted by moving their position up by the JavaScript engine.
+
+Hey, relax, nothing like that ever happens! Honestly, no code physically gets hoisted. It is all about how memory is allocated for functions, variable declarations in an Execution Context's Creation Phase.
+
+
+Variable Hoisting
+console.log('name is ', name);
+var name;
+name = 'tom';
+console.log('name is ', name);
+
+name is  undefined
+name is  tom
+
+
+The question is, why? We have accessed the variable name well before it has even been declared. Like many other programming languages, we should have got an error. But instead, we got undefined.
+
+in JavaScript, the code execution context is divided into two phases:
+
+Creation Phase
+Execution Phase
+In the creation phase, the memory gets allocated for the variables and initialized with a special value called undefined.
+
+
+The meaning of undefined is, a variable has been declared, but it has no value assigned.
+
+In the code example above, the creation phase declared the variable name by allocating memory for it and marked it as undefined. This phenomenon is called Variable Hoisting in JavaScript.
+
+Later in the execution phase, the value tom gets assigned to the variable name, and the console log statements get executed. As the creation phase happens before the execution phase, we find the variables are already declared, i.e., created in memory(as in Hoisted).
+
+
+
+Function Hoisting
+
+Function hoisting follows a similar path to variable hoisting. In function hoisting, JavaScript Execution Context's creation phase put the function declaration into memory. Let us understand it with this example:
+
+
+// Invoke a function, chase()
+chase();
+
+// Declare a function, chase()
+function chase() {
+  console.log('Tom chases Jerry!');
+  // Invoke a function, caught();
+  caught();
+}
+
+// Declare a function, caught()
+function caught() {
+  console.log('Tom caught Jerry :(')
+}
+
+
+The creation phase of the Execution Context creates a memory for the function chase(), and the entire function declaration has been put into the memory. In the execution phase, the entire function of the memory can be executed.
+
+As we know, the function creates its own execution context(Function Execution Context), the mechanism remains the same in the function execution context. First, create a memory for caught() and put the declaration into it. Later execute it.
+
+
+
+Hoisting Rules
+A general rule of thumb is to always define functions, variables, etc., before using them in code. This can help in avoiding surprises and debugging nightmares.
+
+There are a few guidelines and checks already put into JavaScript language to safe-guard from the pitfalls of using Hoisting without realizing it.
+
+JavaScript only hoists declarations, not initialization. With this, the following code is going to break:
+
+
+
+test();
+
+var test = function() {
+  console.log('I am being tested');
+}
+It will throw the following error because the test declaration is hoisted and initialized with undefined as a value. It was never assumed to be a function. It was, in fact, hoisted as variable hoisting, not function hoisting.
+
+
+let and const declarations are hoisted, too, but they are not initialized to undefined like var. See the example here:
+
+
+
+console.log(foo);
+let foo;
+This will throw the following error but, it will just run fine with var:
+
+
+
+Conclusion
+As mentioned above, always define functions, variables, etc., before using them in code. Do not rely on Hoisting much. At the same time, it is important to understand the underlying concept of why certain things are behaving in specific ways.
